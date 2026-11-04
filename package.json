@@ -1,0 +1,38 @@
+{
+  "name": "dsh-model-memory",
+  "version": "1.0.0",
+  "description": "Remembers the model selection used before shutdown and restores it as the startup default in DeepSeek Harness.",
+  "type": "module",
+  "author": "ImportCoffee",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zxzc114514/dsh-model-memory.git"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "cordis",
+    "plugin",
+    "model",
+    "memory"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
