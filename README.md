@@ -1,4 +1,4 @@
-# dsh-model-memory
+# dsh-startup-model
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platform: DeepSeek Harness](https://img.shields.io/badge/Platform-DeepSeek%20Harness-brightgreen.svg)](https://github.com/deepseek-ai)
@@ -13,7 +13,7 @@ Starts every DSH run on the model you were using when you last quit, eliminating
 
 在 DeepSeek Harness 中，新会话默认使用 profile 模板配置中定义的默认模型。用户在具体会话中切换模型后，退出重新打开或新建会话时往往需要重新点选。
 
-`dsh-model-memory` 通过监听持久化会话事件，将最后一次用户主动选用的模型安全记录到本地状态文件中，并在下一次启动时平滑注入为默认模型：
+`dsh-startup-model` 通过监听持久化会话事件，将最后一次用户主动选用的模型安全记录到本地状态文件中，并在下一次启动时平滑注入为默认模型：
 
 - **纯 Host 端微内核架构**：纯 Node.js 服务实现，不侵入渲染层（无前端 Client 依赖），完全杜绝因渲染端脚本异常导致的 Web Boot 白屏崩溃（All-or-nothing failure）。
 - **子代理隔离保护 (Subagent Isolation)**：智能识别会话上下文（`origin: subagent` 或 `delegationDepth > 0`），子代理在执行专项任务时临时切换的轻量模型不会误污染全局默认配置。
@@ -26,7 +26,7 @@ Starts every DSH run on the model you were using when you last quit, eliminating
 ## 安装方法 (Installation)
 
 ### 方式一：通过 DSH 插件市场 (Market)
-在 DeepSeek Harness 插件管理器中搜索并安装 `dsh-model-memory`。
+在 DeepSeek Harness 插件管理器中搜索并安装 `dsh-startup-model`。
 
 ### 方式二：手动引入配置 (Manual)
 在 DSH profile 的 `package.json` 的 `dependencies` 与 `dsh.profile.bundles` 中引入本插件：
@@ -34,12 +34,12 @@ Starts every DSH run on the model you were using when you last quit, eliminating
 ```json
 {
   "dependencies": {
-    "dsh-model-memory": "https://github.com/zxzc114514/dsh-model-memory/releases/latest/download/dsh-model-memory.tgz"
+    "dsh-startup-model": "https://github.com/zxzc114514/dsh-startup-model/releases/latest/download/dsh-startup-model.tgz"
   },
   "dsh": {
     "profile": {
       "bundles": [
-        "dsh-model-memory"
+        "dsh-startup-model"
       ]
     }
   }
@@ -55,8 +55,8 @@ Starts every DSH run on the model you were using when you last quit, eliminating
 可在 profile 的 `cordis.patch.yml` 中为插件提供自定义配置（通常无需任何配置，开箱即用）：
 
 ```yaml
-- id: model-memory
-  name: 'dsh-model-memory'
+- id: startup-model
+  name: 'dsh-startup-model'
   config:
     enabled: true
     trackSubagents: false
@@ -65,7 +65,7 @@ Starts every DSH run on the model you were using when you last quit, eliminating
 
 | 配置项 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
-| `enabled` | `boolean` | `true` | 是否启用模型记忆功能 |
+| `enabled` | `boolean` | `true` | 是否启用启动模型记忆功能 |
 | `trackSubagents` | `boolean` | `false` | 是否跟踪子代理派生会话中的模型变更（默认关闭以保护主模型） |
 | `stateFile` | `string` | `~/.dsh/model-memory.state.json` | 状态持久化文件存放路径 |
 

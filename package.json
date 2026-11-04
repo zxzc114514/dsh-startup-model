@@ -1,5 +1,5 @@
 {
-  "name": "dsh-model-memory",
+  "name": "dsh-startup-model",
   "version": "1.0.0",
   "description": "Remembers the model selection used before shutdown and restores it as the startup default in DeepSeek Harness.",
   "type": "module",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zxzc114514/dsh-model-memory.git"
+    "url": "https://github.com/zxzc114514/dsh-startup-model.git"
   },
   "keywords": [
     "deepseek-harness",
@@ -15,7 +15,8 @@
     "cordis",
     "plugin",
     "model",
-    "memory"
+    "memory",
+    "startup-model"
   ],
   "exports": {
     ".": "./index.js",
